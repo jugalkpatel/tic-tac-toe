@@ -6,6 +6,7 @@ export function createPlayBoard() {
   playBoard.style.padding = "1rem";
   playBoard.style.display = "grid";
   playBoard.style.gridTemplateColumns = "1fr 1fr 1fr";
+  playBoard.style.gridTemplateRows = "1fr 1fr 1fr";
 
   const boardSquares = createSquaresInBoard();
 
