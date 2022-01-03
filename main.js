@@ -1,6 +1,6 @@
-import './style.css'
+import "./style.css";
+import { createPlayBoard } from "./scripts/createPlayBoard";
 
-document.querySelector('#app').innerHTML = `
-  <h1>Hello Vite!</h1>
-  <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
-`
+const app = document.querySelector("#app");
+const gameBoard = createPlayBoard();
+app.appendChild(gameBoard);
