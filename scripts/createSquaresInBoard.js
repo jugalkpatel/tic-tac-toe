@@ -1,14 +1,11 @@
 import { SIZE_OF_THE_BOARD } from "./constants";
-import { createGameState } from "./createGameState";
 
-export function createSquaresInBoard() {
+export function createSquaresInBoard(setGameState) {
   const squares = [];
 
   const values = ["O", "X"];
 
   let currentValue = values[0];
-
-  const { setState } = createGameState();
 
   for (let i = 0; i < SIZE_OF_THE_BOARD; i++) {
     for (let j = 0; j < SIZE_OF_THE_BOARD; j++) {
@@ -24,7 +21,7 @@ export function createSquaresInBoard() {
       box.style.fontSize = "1.5rem";
 
       function clickHandler() {
-        setState(i, j, currentValue);
+        setGameState(i, j, currentValue);
         box.textContent = currentValue;
 
         if (currentValue === values[0]) {

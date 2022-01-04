@@ -1,4 +1,6 @@
+import { createGameState } from "./createGameState";
 import { createSquaresInBoard } from "./createSquaresInBoard";
+
 export function createPlayBoard() {
   const playBoard = document.createElement("div");
   playBoard.className = "pb";
@@ -8,7 +10,9 @@ export function createPlayBoard() {
   playBoard.style.gridTemplateColumns = "1fr 1fr 1fr";
   playBoard.style.gridTemplateRows = "1fr 1fr 1fr";
 
-  const boardSquares = createSquaresInBoard();
+  const { setState: setGameState } = createGameState();
+
+  const boardSquares = createSquaresInBoard(setGameState);
 
   boardSquares.forEach((square) => {
     playBoard.appendChild(square);
