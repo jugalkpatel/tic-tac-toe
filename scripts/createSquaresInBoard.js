@@ -1,10 +1,12 @@
 import { SIZE_OF_THE_BOARD } from "./constants";
 
-export function createSquaresInBoard(setGameState) {
+export function createSquaresInBoard({
+  setGameState,
+  playerOneState,
+  playerTwoState,
+}) {
   const squares = [];
-
   const values = ["O", "X"];
-
   let currentValue = values[0];
 
   for (let i = 0; i < SIZE_OF_THE_BOARD; i++) {
@@ -20,20 +22,23 @@ export function createSquaresInBoard(setGameState) {
       box.style.alignItems = "center";
       box.style.fontSize = "1.5rem";
 
-      function clickHandler() {
+      function handleClick() {
+        if (playerOneState.isGameOver || playerTwoState.isGameOver) return;
+
         setGameState(i, j, currentValue);
         box.textContent = currentValue;
+        box.disabled = true;
 
         if (currentValue === values[0]) {
           currentValue = values[1];
+          playerOneState.setPlayerState(i, j);
         } else {
           currentValue = values[0];
+          playerTwoState.setPlayerState(i, j);
         }
-
-        box.disabled = true;
       }
 
-      box.addEventListener("click", clickHandler);
+      box.addEventListener("click", handleClick);
 
       squares.push(box);
     }

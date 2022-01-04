@@ -1,5 +1,6 @@
 import { createGameState } from "./createGameState";
 import { createSquaresInBoard } from "./createSquaresInBoard";
+import { createPlayerState } from "./createPlayerState";
 
 export function createPlayBoard() {
   const playBoard = document.createElement("div");
@@ -12,7 +13,14 @@ export function createPlayBoard() {
 
   const { setState: setGameState } = createGameState();
 
-  const boardSquares = createSquaresInBoard(setGameState);
+  const playerOneState = createPlayerState();
+  const playerTwoState = createPlayerState();
+
+  const boardSquares = createSquaresInBoard({
+    setGameState,
+    playerOneState,
+    playerTwoState,
+  });
 
   boardSquares.forEach((square) => {
     playBoard.appendChild(square);
