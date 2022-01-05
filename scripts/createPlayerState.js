@@ -37,8 +37,6 @@ function winAlongRevDiagonal(row, col, revDiagonalContainer) {
 }
 
 export function createPlayerState() {
-  //create a state variable that updated when player wins
-  //create a method that reset every container when one player wins or game gets reset
   const state = {
     rowsContainer: new Array(0, 0, 0),
     columnContainer: new Array(0, 0, 0),
@@ -48,19 +46,30 @@ export function createPlayerState() {
     setPlayerState: function (row, col) {
       if (winAlongRows(row, this.rowsContainer) === -1) {
         this.isGameOver = true;
+        return;
       }
 
       if (winAlongColumns(col, this.columnContainer) === -1) {
         this.isGameOver = true;
+        return;
       }
 
       if (winAlongDiagonal(row, col, this.diagonalContainer) === -1) {
         this.isGameOver = true;
+        return;
       }
 
       if (winAlongRevDiagonal(row, col, this.revDiagonalContainer) === -1) {
         this.isGameOver = true;
+        return;
       }
+    },
+    resetState: function () {
+      this.rowsContainer = new Array(0, 0, 0);
+      this.columnContainer = new Array(0, 0, 0);
+      this.diagonalContainer = new Array(0, 0, 0);
+      this.revDiagonalContainer = new Array(0, 0, 0);
+      this.isGameOver = false;
     },
   };
   return state;
