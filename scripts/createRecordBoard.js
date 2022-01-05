@@ -3,18 +3,6 @@ export function createRecordBoard() {
   recordBoard.style.display = "flex";
   recordBoard.style.justifyContent = "center";
 
-  const updateLabel = {
-    drawLabel: (newValue) => {
-      document.querySelector(".draw-label").textContent = newValue;
-    },
-    winnerOLabel: (newValue) => {
-      document.querySelector(".player1-label").textContent = newValue;
-    },
-    winnerXLabel: (newValue) => {
-      document.querySelector(".player2-label").textContent = newValue;
-    },
-  };
-
   recordBoard.innerHTML = `
     <section class="label-container">
       <label>Draw</label>
@@ -32,5 +20,5 @@ export function createRecordBoard() {
     </section>
   `;
 
-  return { recordBoard, updateLabel };
+  return { recordBoard };
 }

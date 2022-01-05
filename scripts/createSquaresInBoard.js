@@ -30,12 +30,15 @@ function isGameComplete({ square, playerOne, playerTwo, game }) {
     game.updateRecord(isPlayerOneWin, isPlayerTwoWin);
     playerOne.resetState();
     playerTwo.resetState();
+    document.querySelector(".draw-label").textContent = game.record.draws;
+    document.querySelector(".player1-label").textContent = game.record.winnerO;
+    document.querySelector(".player2-label").textContent = game.record.winnerX;
   }
 }
 
 function styleSquare(square) {
   square.style.backgroundColor = "transparent";
-  square.style.border = "1px solid black";
+  square.style.border = "3px solid black";
   square.style.display = "flex";
   square.style.color = "black";
   square.style.justifyContent = "center";
@@ -53,6 +56,7 @@ export function createSquaresInBoard({ game, playerOne, playerTwo }) {
     for (let j = 0; j < SIZE_OF_THE_BOARD; j++) {
       const square = document.createElement("button");
       square.textContent = game.value[i][j];
+      square.id = `pb__sq-${i}-${j}`;
       square.className = "pb__sq";
       styleSquare(square);
 

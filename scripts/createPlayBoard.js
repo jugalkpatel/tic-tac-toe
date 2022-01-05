@@ -8,7 +8,7 @@ function removeAllChilds(parent) {
   }
 }
 
-export function createPlayBoard(updateLabel) {
+export function createPlayBoard() {
   const playBoard = document.createElement("div");
   playBoard.className = "pb";
   playBoard.style.width = "100%";
@@ -35,10 +35,10 @@ export function createPlayBoard(updateLabel) {
   });
 
   playBoard.addEventListener("game-over", function () {
-    const { record } = game;
-    updateLabel.drawLabel(record.draws);
-    updateLabel.winnerOLabel(record.winnerO);
-    updateLabel.winnerXLabel(record.winnerX);
+    // const { record } = game;
+    // updateLabel.drawLabel(record.draws);
+    // updateLabel.winnerOLabel(record.winnerO);
+    // updateLabel.winnerXLabel(record.winnerX);
     removeAllChilds(playBoard);
     const newBoardSquares = createSquaresInBoard({
       game,
