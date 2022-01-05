@@ -15,6 +15,7 @@ export function createPlayBoard(updateLabel) {
   playBoard.style.height = "90%";
   playBoard.style.padding = "1rem";
   playBoard.style.display = "grid";
+  playBoard.style.position = "relative";
   playBoard.style.gridTemplateColumns = "1fr 1fr 1fr";
   playBoard.style.gridTemplateRows = "1fr 1fr 1fr";
 

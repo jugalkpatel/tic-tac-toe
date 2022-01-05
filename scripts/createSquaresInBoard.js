@@ -1,15 +1,35 @@
 import { SIZE_OF_THE_BOARD } from "./constants";
 
+function createRestartLayer(square) {
+  const playBoard = document.querySelector(".pb");
+  const restartLayer = document.createElement("div");
+  restartLayer.className = "restart-layer";
+  restartLayer.style.position = "absolute";
+  restartLayer.style.width = "100%";
+  restartLayer.style.height = "100%";
+  restartLayer.style.cursor = "pointer";
+  restartLayer.style.backgroundColor = "rgba(0,0,0,0)";
+  restartLayer.addEventListener("click", () => {
+    square.dispatchEvent(new CustomEvent("game-over", { bubbles: true }));
+  });
+  playBoard.appendChild(restartLayer);
+}
+
 function isGameComplete({ square, playerOne, playerTwo, game }) {
   const isPlayerOneWin = playerOne.isGameOver;
   const isPlayerTwoWin = playerTwo.isGameOver;
   const isDraw = game.isGameOver();
+
   if (isPlayerOneWin || isPlayerTwoWin || isDraw) {
+    const elements = document.querySelectorAll(".pb__sq");
+    elements.forEach((element) => {
+      element.style.color = "#656565";
+    });
+    createRestartLayer(square);
     game.resetState();
     game.updateRecord(isPlayerOneWin, isPlayerTwoWin);
     playerOne.resetState();
     playerTwo.resetState();
-    square.dispatchEvent(new CustomEvent("game-over", { bubbles: true }));
   }
 }
 
@@ -21,6 +41,7 @@ function styleSquare(square) {
   square.style.justifyContent = "center";
   square.style.alignItems = "center";
   square.style.fontSize = "1.5rem";
+  square.style.fontWeight = "bold";
 }
 
 export function createSquaresInBoard({ game, playerOne, playerTwo }) {
@@ -32,7 +53,7 @@ export function createSquaresInBoard({ game, playerOne, playerTwo }) {
     for (let j = 0; j < SIZE_OF_THE_BOARD; j++) {
       const square = document.createElement("button");
       square.textContent = game.value[i][j];
-      square.id = `pb__sq-${i}_${j}`;
+      square.className = "pb__sq";
       styleSquare(square);
 
       function handleClick() {
