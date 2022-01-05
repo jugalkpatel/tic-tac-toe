@@ -2,6 +2,12 @@ import { createGameState } from "./createGameState";
 import { createSquaresInBoard } from "./createSquaresInBoard";
 import { createPlayerState } from "./createPlayerState";
 
+function removeAllChilds(parent) {
+  while (parent.lastChild) {
+    parent.removeChild(parent.lastChild);
+  }
+}
+
 export function createPlayBoard() {
   const playBoard = document.createElement("div");
   playBoard.className = "pb";
@@ -11,19 +17,29 @@ export function createPlayBoard() {
   playBoard.style.gridTemplateColumns = "1fr 1fr 1fr";
   playBoard.style.gridTemplateRows = "1fr 1fr 1fr";
 
-  const { setState: setGameState } = createGameState();
+  const gameState = createGameState();
 
   const playerOneState = createPlayerState();
   const playerTwoState = createPlayerState();
 
   const boardSquares = createSquaresInBoard({
-    setGameState,
+    gameState,
     playerOneState,
     playerTwoState,
   });
 
   boardSquares.forEach((square) => {
     playBoard.appendChild(square);
+  });
+
+  playBoard.addEventListener("game-over", function () {
+    removeAllChilds(playBoard);
+    const newBoardSquares = createSquaresInBoard({
+      gameState,
+      playerOneState,
+      playerTwoState,
+    });
+    newBoardSquares.forEach((square) => playBoard.appendChild(square));
   });
 
   return playBoard;
