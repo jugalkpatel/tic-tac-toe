@@ -1,12 +1,12 @@
 import { SIZE_OF_THE_BOARD } from "./constants";
 
-function isGameComplete(box, playerOne, playerTwo, gameState) {
-  const isDraw = gameState.isGameOver();
+function isGameComplete({ square, playerOne, playerTwo, game }) {
+  const isDraw = game.isGameOver();
   if (playerOne.isGameOver || playerTwo.isGameOver || isDraw) {
-    gameState.resetState();
+    game.resetState();
     playerOne.resetState();
     playerTwo.resetState();
-    box.dispatchEvent(new CustomEvent("game-over", { bubbles: true }));
+    square.dispatchEvent(new CustomEvent("game-over", { bubbles: true }));
   }
 }
 
@@ -20,11 +20,7 @@ function styleSquare(square) {
   square.style.fontSize = "1.5rem";
 }
 
-export function createSquaresInBoard({
-  gameState,
-  playerOneState,
-  playerTwoState,
-}) {
+export function createSquaresInBoard({ game, playerOne, playerTwo }) {
   const squares = [];
   const values = ["O", "X"];
   let currentValue = values[0];
@@ -32,27 +28,27 @@ export function createSquaresInBoard({
   for (let i = 0; i < SIZE_OF_THE_BOARD; i++) {
     for (let j = 0; j < SIZE_OF_THE_BOARD; j++) {
       const square = document.createElement("button");
-      square.textContent = gameState.value[i][j];
+      square.textContent = game.value[i][j];
       square.id = `pb__sq-${i}_${j}`;
       styleSquare(square);
 
       function handleClick() {
-        if (values.includes(gameState.value[i][j])) {
+        if (values.includes(game.value[i][j])) {
           return;
         }
 
-        gameState.setGameState(i, j, currentValue);
+        game.setGameState(i, j, currentValue);
         square.textContent = currentValue;
 
         if (currentValue === values[0]) {
           currentValue = values[1];
-          playerOneState.setPlayerState(i, j);
+          playerOne.setPlayerState(i, j);
         } else {
           currentValue = values[0];
-          playerTwoState.setPlayerState(i, j);
+          playerTwo.setPlayerState(i, j);
         }
 
-        isGameComplete(square, playerOneState, playerTwoState, gameState);
+        isGameComplete({ square, playerOne, playerTwo, game });
       }
 
       square.addEventListener("click", handleClick);

@@ -17,15 +17,15 @@ export function createPlayBoard() {
   playBoard.style.gridTemplateColumns = "1fr 1fr 1fr";
   playBoard.style.gridTemplateRows = "1fr 1fr 1fr";
 
-  const gameState = createGameState();
+  const game = createGameState();
 
-  const playerOneState = createPlayerState();
-  const playerTwoState = createPlayerState();
+  const playerOne = createPlayerState();
+  const playerTwo = createPlayerState();
 
   const boardSquares = createSquaresInBoard({
-    gameState,
-    playerOneState,
-    playerTwoState,
+    game,
+    playerOne,
+    playerTwo,
   });
 
   boardSquares.forEach((square) => {
@@ -35,9 +35,9 @@ export function createPlayBoard() {
   playBoard.addEventListener("game-over", function () {
     removeAllChilds(playBoard);
     const newBoardSquares = createSquaresInBoard({
-      gameState,
-      playerOneState,
-      playerTwoState,
+      game,
+      playerOne,
+      playerTwo,
     });
     newBoardSquares.forEach((square) => playBoard.appendChild(square));
   });
