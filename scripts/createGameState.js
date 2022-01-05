@@ -9,6 +9,20 @@ export function createGameState() {
 
   const gameState = {
     value: initialValue,
+    record: { draws: 0, winnerX: 0, winnerO: 0 },
+    updateRecord: function (playerOneWin, playerTwoWin) {
+      if (playerOneWin) {
+        this.record.winnerO += 1;
+        return;
+      }
+
+      if (playerTwoWin) {
+        this.record.winnerX += 1;
+        return;
+      }
+
+      this.record.draws += 1;
+    },
     isGameOver: function () {
       for (let i = 0; i < SIZE_OF_THE_BOARD; i++) {
         for (let j = 0; j < SIZE_OF_THE_BOARD; j++) {
