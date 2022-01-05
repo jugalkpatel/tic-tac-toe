@@ -1,9 +1,12 @@
 import { SIZE_OF_THE_BOARD } from "./constants";
 
 function isGameComplete({ square, playerOne, playerTwo, game }) {
+  const isPlayerOneWin = playerOne.isGameOver;
+  const isPlayerTwoWin = playerTwo.isGameOver;
   const isDraw = game.isGameOver();
-  if (playerOne.isGameOver || playerTwo.isGameOver || isDraw) {
+  if (isPlayerOneWin || isPlayerTwoWin || isDraw) {
     game.resetState();
+    game.updateRecord(isPlayerOneWin, isPlayerTwoWin);
     playerOne.resetState();
     playerTwo.resetState();
     square.dispatchEvent(new CustomEvent("game-over", { bubbles: true }));
